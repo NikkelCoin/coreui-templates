@@ -1,24 +1,37 @@
-<table class="table table-responsive-sm table-striped">
-    <thead>
-        <tr>
-            $FIELD_HEADERS$
-            <th colspan="3">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach($$MODEL_NAME_PLURAL_CAMEL$ as $$MODEL_NAME_CAMEL$)
-        <tr>
-            $FIELD_BODY$
-            <td>
-                {!! Form::open(['route' => ['$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.destroy', $$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$], 'method' => 'delete']) !!}
-                <div class='btn-group'>
-                    <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.show', [$$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a>
-                    <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.edit', [$$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$]) }}" class='btn btn-ghost-info'><i class="fa fa-edit"></i></a>
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
-                </div>
-                {!! Form::close() !!}
-            </td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
+<div class="table-responsive-sm">
+    <table class="table table-striped table-bordered" style="width:100%;" id="$MODEL_NAME_PLURAL_CAMEL$-table">
+        <thead>
+            <tr>
+                $FIELD_HEADERS$
+                <th>{{__('Action')}}</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach($$MODEL_NAME_PLURAL_CAMEL$ as $$MODEL_NAME_CAMEL$)
+            <tr>
+                $FIELD_BODY$
+                <td>
+                    {!! Form::open(['route' => ['$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.destroy', $$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$], 'method' => 'delete']) !!}
+                    <div class='btn-group'>
+                        <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.show', [$$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a>
+                        <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.edit', [$$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$]) }}" class='btn btn-ghost-info'><i class="fa fa-edit"></i></a>
+                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                    </div>
+                    {!! Form::close() !!}
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
+
+@push('page_scripts')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#$MODEL_NAME_PLURAL_CAMEL$-table').dataTable( {
+                responsive: true
+            });
+            $('#$MODEL_NAME_PLURAL_CAMEL$-table').attr('style', 'border-collapse: collapse !important');
+        });
+    </script>
+@endpush
